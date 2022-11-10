@@ -8,42 +8,7 @@ pipeline{
                 }
             }
 
-            stage('UNIT TEST'){
-                steps{
-                    sh 'mvn test'
-                }
-            }
-
-            stage('Integration testing'){
-                steps{
-                    sh 'mvn verify -DskipUnitTests'
-                }
-            }
-
-            stage('Maven Build'){
-                steps{
-                    sh 'mvn clean install'
-                }
-            }
-
-            stage('Static code analysis'){
-                steps{
-                    script{
-                        withSonarQubeEnv(credentialsId: 'sonar-api-key') {  
-                        sh 'mvn clean package sonar:sonar'
-                        }
-                    }
-                }
-            }   
-       
-            stage('Quality Gate Status'){
-                steps{
-                    script{
-                        waitForQualityGate (abortPipeline: false, credentialsId: 'sonar-api-key')
-                    }
-                       
-                }
-            } 
-
+        
+          
         }
 }
